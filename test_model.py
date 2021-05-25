@@ -14,8 +14,18 @@ from learner.gnn_dagger import DAGGER
 def test(args, actor_path, render=True):
     # initialize gym env
     env_name = args.get('env')
+    print('env_name= ', env_name)
     env = gym.make(env_name)
-    if isinstance(env.env, gym_flock.envs.FlockingRelativeEnv):
+    if isinstance(env.env, gym_flock.envs.flocking.FlockingRelativeEnv):
+        env.env.params_from_cfg(args)
+        
+    elif isinstance(env.env, gym_flock.envs.flocking.FlockingLeaderEnv):
+        env.env.params_from_cfg(args)
+    
+    elif isinstance(env.env, gym_flock.envs.flocking.FlockingLeaderEnv1):
+        env.env.params_from_cfg(args)
+    
+    elif isinstance(env.env, gym_flock.envs.flocking.FlockingLeaderEnv2):
         env.env.params_from_cfg(args)
 
     # use seed
@@ -37,13 +47,14 @@ def test(args, actor_path, render=True):
         done = False
         while not done:
             action = learner.select_action(state)
+            # print('\nshape action:',action.shape)
             next_state, reward, done, _ = env.step(action.cpu().numpy())
             next_state = MultiAgentStateWithDelay(device, args, next_state, prev_state=state)
             episode_reward += reward
             state = next_state
             if render:
                 env.render()
-        print(episode_reward)
+        print('episode_reward:',episode_reward)
     env.close()
 
 
@@ -54,7 +65,8 @@ def main():
     config.read(config_file)
 
     printed_header = False
-    actor_path = 'models/actor_FlockingRelative-v0_dagger_k3'
+    # actor_path = 'models/actor_FlockingRelative-v0_dagger_k3'
+    actor_path = 'models/actor_FlockingLeader-v0_dagger_leader_k4'
 
     if config.sections():
         for section_name in config.sections():
