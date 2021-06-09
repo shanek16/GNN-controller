@@ -51,6 +51,7 @@ def test(args, actor_path, render=True):
     learner.load_model(actor_path, device)
 
     for _ in range(n_test_episodes):
+        print('\nepisode {}:'.format(_))
         episode_reward = 0
         state = MultiAgentStateWithDelay(device, args, env.reset(), prev_state=None)
         done = False
@@ -74,7 +75,7 @@ def main():
 
     printed_header = False
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k3'
-    actor_path = 'models/actor_FlockingRelative-v0_dagger_k4'
+    actor_path = 'models/actor_FlockingRelative-v0_dagger_k1'
 
     if config.sections():
         for section_name in config.sections():
