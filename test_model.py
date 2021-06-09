@@ -28,6 +28,15 @@ def test(args, actor_path, render=True):
     elif isinstance(env.env, gym_flock.envs.flocking.FlockingLeaderEnv2):
         env.env.params_from_cfg(args)
 
+    elif isinstance(env.env, gym_flock.envs.flocking.FlockingLeaderEnv_v2):
+        env.env.params_from_cfg(args)
+
+    elif isinstance(env.env, gym_flock.envs.flocking.FlockingLeaderEnv1_v2):
+        env.env.params_from_cfg(args)
+
+    elif isinstance(env.env, gym_flock.envs.flocking.FlockingLeaderEnv2_v2):
+        env.env.params_from_cfg(args)
+
     # use seed
     seed = args.getint('seed')
     env.seed(seed)
@@ -47,7 +56,6 @@ def test(args, actor_path, render=True):
         done = False
         while not done:
             action = learner.select_action(state)
-            # print('\nshape action:',action.shape)
             next_state, reward, done, _ = env.step(action.cpu().numpy())
             next_state = MultiAgentStateWithDelay(device, args, next_state, prev_state=state)
             episode_reward += reward
@@ -66,7 +74,7 @@ def main():
 
     printed_header = False
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k3'
-    actor_path = 'models/actor_FlockingLeader-v0_dagger_leader_k4'
+    actor_path = 'models/actor_FlockingRelative-v0_dagger_k4'
 
     if config.sections():
         for section_name in config.sections():
