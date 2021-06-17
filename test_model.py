@@ -58,16 +58,13 @@ def test(args, actor_path, render=False):
         episode_reward = 0
         state = MultiAgentStateWithDelay(device, args, env.reset(), prev_state=None)
         done = False
-        index = 0
         while not done:
-            index += 1
             action = learner.select_action(state)
             next_state, reward, done, _ = env.step(action.cpu().numpy())
             next_state = MultiAgentStateWithDelay(device, args, next_state, prev_state=state)
             episode_reward += reward
             state = next_state
-            if render: #and (index == 1 or index == 200):
-                # env.render(index, n_test_episodes)
+            if render:
                 env.render()
         print('episode_reward:',episode_reward)
     env.close()
@@ -82,9 +79,9 @@ def main():
     printed_header = False
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k3'
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k1'
-    actor_path = 'models/actor_FlockingRelative-v0_dagger_k4'
-    # actor_path = 'models/actor_FlockingRelative-v0_dagger_leader_v2_k4'
-    # actor_path = 'models/actor_FlockingRelative-v0_dagger_leader_v2_k4_2pi'
+    # actor_path = 'models/actor_FlockingRelative-v0_dagger_k4'
+    # actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4'
+    actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4_2pi'
 
 
     if config.sections():
