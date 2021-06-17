@@ -80,8 +80,8 @@ def main():
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k3'
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k1'
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k4'
-    # actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4'
-    actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4_2pi'
+    actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4' #works best
+    # actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4_2pi'
 
 
     if config.sections():
