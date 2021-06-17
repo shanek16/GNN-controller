@@ -11,7 +11,7 @@ from learner.state_with_delay import MultiAgentStateWithDelay
 from learner.gnn_dagger import DAGGER
 
 
-def test(args, actor_path, render=True):
+def test(args, actor_path, render=False):
     # initialize gym env
     env_name = args.get('env')
     print('env_name= ', env_name)
@@ -35,6 +35,9 @@ def test(args, actor_path, render=True):
         env.env.params_from_cfg(args)
 
     elif isinstance(env.env, gym_flock.envs.flocking.FlockingLeaderEnv2_v2):
+        env.env.params_from_cfg(args)
+
+    elif isinstance(env.env, gym_flock.envs.flocking.FlockingLeaderEnv_v3):
         env.env.params_from_cfg(args)
 
     # use seed
@@ -80,6 +83,9 @@ def main():
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k3'
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k1'
     actor_path = 'models/actor_FlockingRelative-v0_dagger_k4'
+    # actor_path = 'models/actor_FlockingRelative-v0_dagger_leader_v2_k4'
+    # actor_path = 'models/actor_FlockingRelative-v0_dagger_leader_v2_k4_2pi'
+
 
     if config.sections():
         for section_name in config.sections():
