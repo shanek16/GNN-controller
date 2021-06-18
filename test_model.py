@@ -11,7 +11,7 @@ from learner.state_with_delay import MultiAgentStateWithDelay
 from learner.gnn_dagger import DAGGER
 
 
-def test(args, actor_path, render=True):
+def test(args, actor_path, render=False):
     # initialize gym env
     env_name = args.get('env')
     print('env_name= ', env_name)
@@ -20,6 +20,9 @@ def test(args, actor_path, render=True):
         if env_name == 'FlockingLeader-v4':
             m = sys.argv[2]
             env.env.params_from_cfg(args, m)
+        elif env_name == 'FlockingLeader-v2'or 'FlockingLeader1-v2' or 'FlockingLeader2-v2':
+            R = sys.argv[2]
+            env.env.params_from_cfg(args, R)
         else:
             env.env.params_from_cfg(args)
 
@@ -62,10 +65,10 @@ def main():
     printed_header = False
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k3'
     # actor_path = 'models/actor_FlockingRelative-v0_dagger_k1'
-    # actor_path = 'models/actor_FlockingRelative-v0_dagger_k4'
+    actor_path = 'models/actor_FlockingRelative-v0_dagger_k4'
     # actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4'
     # actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4_2pi'
-    actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4_r5'#works best
+    # actor_path = 'models/actor_FlockingLeader-v2_dagger_leader_v2_k4_r5'#works best
 
 
     if config.sections():
